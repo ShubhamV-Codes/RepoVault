@@ -18,7 +18,9 @@ yargs(hideBin(process.argv))
         describe:"File to be added to the repository",
         type:"string"
     });
-},addRepo)
+},(argv)=>{
+    addRepo(argv.file);
+})
 
 //Commit changes to Repository
 .command("commit <message>","Commit changes to the repository",(yargs)=>{
@@ -26,7 +28,9 @@ yargs(hideBin(process.argv))
         describe:"Commit message",
         type:"string"
     });
-},commitRepo)
+},(argv)=>{
+    commitRepo(argv.message);
+})
 
 //Push changes to Remote Repository
 .command("push","Push commits to S3",{},pushRepo)
@@ -40,7 +44,9 @@ yargs(hideBin(process.argv))
         describe:"Commit ID to revert to",
         type:"string"
     });
-},revertRepo)
+},(argv)=>{
+    revertRepo(argv.commitID);
+})
 
 .demandCommand(1, "You need atleast one command")
 .help().argv;
