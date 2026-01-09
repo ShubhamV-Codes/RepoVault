@@ -43,12 +43,39 @@ async function getAllRepositories(req, res) {
     res.status(500).json({ error: "Error fetching repositories" });
   }
 }
+
 async function fetchRepositoryById(req, res) {
-  res.send("Repository fetched by ID");
+  const { id } = req.params;
+  try {
+    const repository = await Repository.findById({ _id: id }).populate(
+      "owner issues"
+    );
+    if (!repository) {
+      return res.status(404).json({ error: "Repository not found" });
+    }
+    res.status(200).json(repository);
+  } catch (error) {
+    console.log("Error during fetching repository by ID:", error);
+    res.status(500).json({ error: "Error fetching repository" });
+  }
 }
+
 async function fetchRepositoriesByName(req, res) {
-  res.send("Repository fetched by name");
+  const { name } = req.params;
+  try {
+    const repository = await Repository.findOne({ name: name }).populate(
+      "owner issues"
+    );
+    if (!repository) {
+      return res.status(404).json({ error: "Repository not found" });
+    }
+    res.status(200).json(repository);
+  } catch (error) {
+    console.log("Error during fetching repository by name:", error);
+    res.status(500).json({ error: "Error fetching repository" });
+  }
 }
+
 async function fetchRepositoryForCurrentUser(req, res) {
   res.send("Repository fetched for current user");
 }
