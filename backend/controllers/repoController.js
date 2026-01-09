@@ -77,16 +77,73 @@ async function fetchRepositoriesByName(req, res) {
 }
 
 async function fetchRepositoryForCurrentUser(req, res) {
-  res.send("Repository fetched for current user");
+  const { userID } = req.params;
+  try {
+    const repositories = await Repository.find({ owner: userID }).populate(
+      "owner issues"
+    );
+    if (repositories.length === 0 || !repositories) {
+      return res
+        .status(404)
+        .json({ error: "No repositories found for this user" });
+    }
+    res.status(200).json(repositories);
+  } catch (error) {
+    console.log("Error during fetching repositories for current user:", error);
+    res.status(500).json({ error: "Error fetching repositories" });
+  }
 }
+
 async function updateRepositoryById(req, res) {
-  res.send("Repository updated");
+  const { id } = req.params;
+  const { content, description, name } = req.body;
+  try {
+    const repository = await Repository.findByIdAndUpdate(
+      id,
+      { content, description, name },
+      { new: true }
+    );
+    if (!repository) {
+      return res.status(404).json({ error: "Repository not found" });
+    }
+    res.status(200).json(repository);
+  } catch (error) {
+    console.log("Error during updating repository:", error);
+    res.status(500).json({ error: "Error updating repository" });
+  }
 }
+
 async function toggleRepositoryVisibility(req, res) {
-  res.send("Repository visibility toggled");
+  const { id } = req.params;
+  try {
+    const repository = await Repository.findById(id);
+    if (!repository) {
+      return res.status(404).json({ error: "Repository not found" });
+    }
+    const updatedRepository = await Repository.findByIdAndUpdate(
+      id,
+      { visibility: !repository.visibility },
+      { new: true }
+    );
+    res.status(200).json(updatedRepository);
+  } catch (error) {
+    console.log("Error during toggling repository visibility:", error);
+    res.status(500).json({ error: "Error toggling repository visibility" });
+  }
 }
+
 async function deleteRepositoryById(req, res) {
-  res.send("Repository deleted");
+  const { id } = req.params;
+  try {
+    const repository = await Repository.findByIdAndDelete(id);
+    if (!repository) {
+      return res.status(404).json({ error: "Repository not found" });
+    }
+    res.status(200).json({ message: "Repository deleted successfully" });
+  } catch (error) {
+    console.log("Error during deleting repository:", error);
+    res.status(500).json({ error: "Error deleting repository" });
+  }
 }
 
 module.exports = {
