@@ -1,0 +1,155 @@
+.login-wrapper {
+  width: 100vw;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #0d1117;
+}
+
+
+/* Logo container */
+.login-logo-container {
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-login {
+  width: 60px;
+  height: 60px;
+}
+
+/* Card wrapper */
+.login-box-wrapper {
+  width: 360px;
+  background-color: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  padding: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+/* Heading */
+.login-heading {
+  text-align: center;
+  margin-bottom: 16px;
+  color: #e6edf3;
+}
+.login-heading h2 {
+  font-size: 24px;
+  font-weight: 300;
+  margin: 0;
+  color: #24292f;
+}
+
+/* Form */
+.login-box {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Labels */
+.label {
+  font-size: 13px;
+  margin-bottom: 6px;
+  color: #c9d1d9;
+}
+
+/* Inputs */
+.input {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #30363d;
+  background-color: #0d1117;
+  color: #e6edf3;
+  font-size: 14px;
+  outline: none;
+}
+
+.input:focus {
+  border-color: #1f6feb;
+  box-shadow: 0 0 0 1px #1f6feb;
+}
+
+/* Button */
+.login-btn {
+  width: 100%;
+  margin-top: 12px;
+}
+
+/* Bottom text */
+.pass-box {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 13px;
+  color: #8b949e;
+}
+
+.pass-box a {
+  color: #1f6feb;
+  text-decoration: none;
+}
+
+.pass-box a:hover {
+  text-decoration: underline;
+}
+
+.error-message {
+  background-color: #ff4444;
+  color: white;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-wrapper .input {
+  padding-right: 60px;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #0969da;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 4px 8px;
+}
+
+.password-toggle:hover {
+  text-decoration: underline;
+}
+
+.login-box input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.login-logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.logo-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #f18008;
+  letter-spacing: 0.5px;
+}
