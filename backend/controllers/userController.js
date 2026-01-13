@@ -62,6 +62,7 @@ async function signup(req, res) {
     return res.status(201).json({
       success: true,
       token,
+      userId: result.insertedId,
     });
   } catch (error) {
     console.error("Signup error:", error);

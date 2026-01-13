@@ -3,9 +3,12 @@ import {useNavigate, useRoutes} from 'react-router-dom';
 
 // Page-List
 import Dashboard from './components/dashboard/Dashboard.jsx';
+import CreateRepository from "./components/repo/CreateRepository";
+import RepositoryDetails from "./components/repo/RepositoryDetails";
 import Login from './components/auth/Login.jsx';
 import Signup from './components/auth/Signup.jsx';
 import Profile from './components/user/Profile.jsx';
+import AddFile from './components/repo/AddFile';
 
 // Auth Context
 import {useAuth} from './authContext.jsx';
@@ -51,7 +54,21 @@ const ProjectRoutes = () => {
         {
             path: "/profile",
             element: <Profile/>
-        }
+        },
+        {
+            path: "/repo/create",           
+            element: <CreateRepository/>     
+        },
+        {
+    path: "/repo/:repoId",           
+    element: <RepositoryDetails/>     
+  },
+  {
+
+    path: "/repo/:repoId/add-file",         
+    element: <AddFile/>    
+  }
+
     ]);
 
     return element;
