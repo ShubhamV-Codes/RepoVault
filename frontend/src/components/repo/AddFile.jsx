@@ -29,7 +29,7 @@ const AddFile = () => {
     setLoading(true);
 
     try {
-      await axios.post(`http://localhost:3000/repo/${repoId}/file`, {
+      await axios.post(`https://repovault.onrender.com/repo/${repoId}/file`, {
         filename: filename.trim(),
         content,
         fileType

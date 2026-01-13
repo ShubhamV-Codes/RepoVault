@@ -46,7 +46,7 @@ const CreateRepository = () => {
       const userId = localStorage.getItem("userId");
       const token = localStorage.getItem("token");
 
-      const response = await fetch("http://localhost:3000/repo/create", {
+      const response = await fetch("https://repovault.onrender.com/repo/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

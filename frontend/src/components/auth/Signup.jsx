@@ -61,7 +61,7 @@ const Signup = () => {
     try {
       setLoading(true);
 
-      const res = await axios.post("http://localhost:3000/signup", {
+      const res = await axios.post("https://repovault.onrender.com/signup", {
         email: email.trim(),
         username: username.trim(),
         password,

@@ -39,7 +39,7 @@ const Profile = () => {
 
       // Fetch user profile
       const userResponse = await fetch(
-        `http://localhost:3000/userprofile/${userId}`,
+        `https://repovault.onrender.com/userprofile/${userId}`,
         { headers }
       );
 
@@ -68,7 +68,7 @@ const Profile = () => {
 
       // Fetch repositories
       const repoResponse = await fetch(
-        `http://localhost:3000/repo/user/${userId}`,
+        `https://repovault.onrender.com/repo/user/${userId}`,
         { headers }
       );
 

@@ -16,7 +16,7 @@ const Dashboard = () => {
 
     const fetchRepositories = async () => {
       try {
-        const url = `http://localhost:3000/repo/user/${userId}`;
+        const url = `https://repovault.onrender.com/repo/user/${userId}`;
         const response = await fetch(url);
 
         if (!response.ok) {
@@ -36,7 +36,7 @@ const Dashboard = () => {
 
     const fetchSuggestedRepositories = async () => {
       try {
-        const response = await fetch("http://localhost:3000/repo/all");
+        const response = await fetch("https://repovault.onrender.com/repo/all");
         const data = await response.json();
         
         // Filter only public repositories

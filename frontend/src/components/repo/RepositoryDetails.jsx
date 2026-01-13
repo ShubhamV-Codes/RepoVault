@@ -22,7 +22,7 @@ const RepositoryDetails = () => {
       setLoading(true);
       setError("");
 
-      const repoResponse = await fetch(`http://localhost:3000/repo/${repoId}`);
+      const repoResponse = await fetch(`https://repovault.onrender.com/repo/${repoId}`);
       if (!repoResponse.ok) {
         throw new Error("Repository not found");
       }
@@ -30,7 +30,7 @@ const RepositoryDetails = () => {
       setRepository(repoData);
 
       try {
-        const pullResponse = await fetch(`http://localhost:3000/repo/${repoId}/pull`);
+        const pullResponse = await fetch(`https://repovault.onrender.com/repo/${repoId}/pull`);
         if (pullResponse.ok) {
           const pullData = await pullResponse.json();
           setFiles(pullData.files || []);
@@ -81,7 +81,7 @@ const RepositoryDetails = () => {
   const fetchFileContent = async (filename) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/repo/${repoId}/file/${filename}`
+        `https://repovault.onrender.com/repo/${repoId}/file/${filename}`
       );
 
       if (!response.ok) {
@@ -113,7 +113,7 @@ const RepositoryDetails = () => {
         const fileType = file.name.split('.').pop();
 
         try {
-          const response = await fetch(`http://localhost:3000/repo/${repoId}/file`, {
+          const response = await fetch(`https://repovault.onrender.com/repo/${repoId}/file`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -158,7 +158,7 @@ const RepositoryDetails = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/repo/${repoId}/file/${filename}`,
+        `https://repovault.onrender.com/repo/${repoId}/file/${filename}`,
         { method: 'DELETE' }
       );
 
@@ -187,7 +187,7 @@ const RepositoryDetails = () => {
 
     try {
       const res = await fetch(
-        `http://localhost:3000/repo/delete/${repoId}`,
+        `https://repovault.onrender.com/repo/delete/${repoId}`,
         { method: "DELETE" }
       );
 

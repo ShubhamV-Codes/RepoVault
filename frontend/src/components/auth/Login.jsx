@@ -45,7 +45,7 @@ const Login = () => {
 
     try {
       setLoading(true);
-      const res = await axios.post("http://localhost:3000/login", {
+      const res = await axios.post("https://repovault.onrender.com/login", {
         email: email.trim(),
         password: password,
       });
