@@ -82,6 +82,13 @@ const Login = () => {
         <div className="login-heading">
           <h2>Sign in</h2>
         </div>
+        
+        <div className="backend-notice">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style={{ flexShrink: 0 }}>
+            <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13zM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75zM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+          </svg>
+          <span>Request may take 15-20 seconds to wake up the server. Please be patient! </span>
+        </div>
 
         <form className="login-box" onSubmit={handleLogin}>
           {error && (

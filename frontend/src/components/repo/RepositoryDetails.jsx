@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import "./repoDetails.css";
 
@@ -16,6 +16,9 @@ const RepositoryDetails = () => {
   const [uploading, setUploading] = useState(false);
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const searchInputRef = useRef(null);
+
+  // Fetch repository details from backend
 
   const fetchRepositoryDetails = useCallback(async () => {
     try {
@@ -49,9 +52,13 @@ const RepositoryDetails = () => {
     }
   }, [repoId]);
 
+// Initial fetch on component mount
+
   useEffect(() => {
     fetchRepositoryDetails();
   }, [fetchRepositoryDetails]);
+
+// Determine language for syntax highlighting
 
   const getLanguage = (filename) => {
     if (!filename) return 'plaintext';
@@ -66,6 +73,7 @@ const RepositoryDetails = () => {
     return langMap[ext] || 'plaintext';
   };
 
+  // Handle file click to view content
   const handleFileClick = useCallback((file) => {
     setSelectedFile(file.filename);
     setLoadingFile(true);
@@ -77,6 +85,8 @@ const RepositoryDetails = () => {
       fetchFileContent(file.filename);
     }
   }, []);
+
+  // Fetch file content from backend
 
   const fetchFileContent = async (filename) => {
     try {
@@ -98,6 +108,8 @@ const RepositoryDetails = () => {
       setLoadingFile(false);
     }
   };
+  
+  // Handle file upload logic
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
@@ -151,6 +163,8 @@ const RepositoryDetails = () => {
     }
   };
 
+  // Hanlde delete file logic
+
   const handleDeleteFile = async (filename) => {
     if (!window.confirm(`Are you sure you want to delete ${filename}?`)) {
       return;
@@ -179,6 +193,8 @@ const RepositoryDetails = () => {
     }
   };
 
+  // Handling delete repository logic 
+
   const handleDeleteRepository = async () => {
     const confirmed = window.confirm(
       `Are you sure you want to permanently delete "${repository.name}"?`
@@ -203,15 +219,20 @@ const RepositoryDetails = () => {
       alert("Error deleting repository");
     }
   };
+  // Copy code to clipboard
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(fileContent);
     alert('Code copied to clipboard!');
   };
 
+  // Filter files based on search query
+
   const filteredFiles = files.filter(file =>
     file.filename.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+// Render component
 
   if (loading) {
     return (
@@ -221,7 +242,7 @@ const RepositoryDetails = () => {
       </div>
     );
   }
-
+ 
   if (error) {
     return (
       <div className="repo-details-error">
@@ -242,9 +263,15 @@ const RepositoryDetails = () => {
   }
 
   return (
-    <div className="repo-details-container">
-      
-      {/* Top Navigation Bar */}
+
+    <div className="repo-details-container" style={{
+    maxWidth: "1280px",
+    margin: "0 auto",
+    
+  }}>
+
+      <div className = "repo-content">
+
       <div className="repo-top-bar">
         <div className="repo-top-left">
           <Link to="/" className="back-icon" title="Back to dashboard">
@@ -254,41 +281,31 @@ const RepositoryDetails = () => {
           <span className={`repo-badge ${repository.visibility ? "public" : "private"}`}>
             {repository.visibility ? "Public" : "Private"}
           </span>
-          {/* <button
+
+       {/* Delete Repository Button  */}
+
+          <button
             className="repo-delete-btn"
             title="Delete repository"
             onClick={handleDeleteRepository}
           >
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-              <path d="M11 1.75V3h2.25a.75.75 0 010 1.5H2.75a.75.75 0 010-1.5H5V1.75C5 .784 5.784 0 6.75 0h2.5C10.216 0 11 .784 11 1.75zM4.496 6.675l.66 6.6a.25.25 0 00.249.225h5.19a.25.25 0 00.249-.225l.66-6.6a.75.75 0 011.492.149l-.66 6.6A1.748 1.748 0 0110.595 15h-5.19a1.75 1.75 0 01-1.741-1.575l-.66-6.6a.75.75 0 111.492-.15z" />
-            </svg>
-          </button> */}
+             Delete this repository 
+          </button>
+
+          {/* User-icon */}
 
           <div className="repo-top-right">
-          <Link to="/profile" className="user-profile-link" title="View profile">
-            <div className="user-avatar">
-              <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
-                <path d="M10.561 8.073a6.005 6.005 0 0 1 3.432 5.142.75.75 0 1 1-1.498.07 4.5 4.5 0 0 0-8.99 0 .75.75 0 0 1-1.498-.07 6.004 6.004 0 0 1 3.431-5.142 3.999 3.999 0 1 1 5.123 0ZM10.5 5a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z"/>
-              </svg>
-            </div>
-            <span className="user-name"></span>
-          </Link>
+            <Link to="/profile" className="user-profile-link" title="View profile">
+              <div className="user-avatar">
+              Your Profile
+              </div>
+              <span className="user-name"></span>
+            </Link>
+          </div>
         </div>
       </div>
-        </div>
-        
-        {/* User Profile Section */}
-        {/* <div className="repo-top-right">
-          <Link to="/profile" className="user-profile-link" title="View profile">
-            <div className="user-avatar">
-              <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
-                <path d="M10.561 8.073a6.005 6.005 0 0 1 3.432 5.142.75.75 0 1 1-1.498.07 4.5 4.5 0 0 0-8.99 0 .75.75 0 0 1-1.498-.07 6.004 6.004 0 0 1 3.431-5.142 3.999 3.999 0 1 1 5.123 0ZM10.5 5a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z"/>
-              </svg>
-            </div>
-            <span className="user-name"></span>
-          </Link>
-        </div>
-      </div> */}
+
+      
 
       {/* Secondary Bar */}
       <div className="repo-secondary-bar">
@@ -316,15 +333,22 @@ const RepositoryDetails = () => {
           </button>
         </div>
         <div className="secondary-right">
+
           <div className="search-box">
             <input
+              ref={searchInputRef}
               type="text"
               placeholder="Go to file"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Escape") setSearchQuery("");
+              }}
             />
-            <kbd>t</kbd>
+
+
           </div>
+
 
           <button className="code-btn" onClick={() => setShowUploadModal(true)}>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -337,7 +361,7 @@ const RepositoryDetails = () => {
       </div>
 
       {/* Commit Info Bar */}
-      <div className="commit-info-bar">
+      <div className="commit-info-bar ">
         <div className="commit-info">
           <div className="commit-avatar">
             <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
@@ -455,8 +479,8 @@ const RepositoryDetails = () => {
               <div className="file-header-right">
                 <button className="copy-code-btn" onClick={copyToClipboard} title="Copy code">
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"/>
-                    <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"/>
+                    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" />
+                    <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" />
                   </svg>
                   Copy
                 </button>
@@ -535,6 +559,8 @@ const RepositoryDetails = () => {
           </div>
         </div>
       )}
+      </div>
+
     </div>
   );
 };
