@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./dashboard.css";
 import Navbar from "../Navbar";
+import Footer from "../Footer";
 
 const Dashboard = () => {
   const [repositories, setRepositories] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [suggestedRepositories, setSuggestedRepositories] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [copiedCommand, setCopiedCommand] = useState(null);
@@ -34,25 +34,7 @@ const Dashboard = () => {
       }
     };
 
-    const fetchSuggestedRepositories = async () => {
-      try {
-        const response = await fetch("https://repovault.onrender.com/repo/all");
-        const data = await response.json();
-        
-        // Filter only public repositories
-        const publicRepos = Array.isArray(data) 
-          ? data.filter(repo => !repo.isPrivate && repo.visibility === true)
-          : [];
-        
-        setSuggestedRepositories(publicRepos.slice(0, 6));
-      } catch (err) {
-        console.error("Error fetching suggested repositories:", err);
-        setSuggestedRepositories([]);
-      }
-    };
-
     fetchRepositories();
-    fetchSuggestedRepositories();
   }, []);
 
   useEffect(() => {
@@ -91,57 +73,78 @@ const Dashboard = () => {
     <>
       <Navbar />
       <section id="dashboard-new">
-        {/* Left Section - Suggested Repositories */}
-        <aside className="dashboard-section suggested-section">
+        {/* Left Section - About RepoVault */}
+        <aside className="dashboard-section about-section">
           <div className="section-header">
             <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
-              <path d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/>
-              <path d="M8 0a8 8 0 100 16A8 8 0 008 0zM1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0z"/>
+              <path d="M8 0a8 8 0 110 16A8 8 0 018 0zM1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0z" />
+              <path d="M8 4a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 018 4zm0 8a1 1 0 100-2 1 1 0 000 2z" />
             </svg>
-            <h2>Explore</h2>
+            <h2>About RepoVault</h2>
           </div>
-          
-          <div className="suggested-repos-grid">
-            {suggestedRepositories.length === 0 ? (
-              <div className="empty-state-explore">
-                <svg width="48" height="48" viewBox="0 0 16 16" fill="currentColor">
-                  <path d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8z"/>
-                </svg>
-                <p>No public repositories available</p>
+
+          <div className="about-content">
+            <div className="about-intro" style={{ textAlign: "center" }}>
+              <h3 >Modern Version Control</h3>
+              <p>
+                RepoVault is a Git-inspired powerful and intuitive version control system built for developers.
+              </p>
+            </div>
+
+            <div className="features-grid">
+              
+
+              <div className="feature-card">
+                <div className="feature-icon">
+                  <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8 0a8 8 0 110 16A8 8 0 018 0zM1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0z" />
+                    <path d="M9.5 7.5a1 1 0 11-2 0 1 1 0 012 0z" />
+                  </svg>
+                </div>
+                <h4>Easy to Use</h4>
+                <p>Intuitive CLI commands that feel familiar and are easy to remember.</p>
               </div>
-            ) : (
-              suggestedRepositories.map((repo) => (
-                <Link 
-                  to={`/repo/${repo._id}`} 
-                  key={repo._id} 
-                  className="suggested-repo-card-new"
-                >
-                  <div className="repo-icon">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                      <path d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8z"/>
-                    </svg>
-                  </div>
-                  <h4 className="repo-name">{repo.name}</h4>
-                  <p className="repo-description">
-                    {repo.description || "No description"}
-                  </p>
-                  <div className="repo-meta">
-                    {repo.language && (
-                      <span className="repo-language-tag">
-                        <span className="language-dot"></span>
-                        {repo.language}
-                      </span>
-                    )}
-                    <span className="public-badge">
-                      <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
-                        <path d="M8 0a8 8 0 110 16A8 8 0 018 0zM1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0z"/>
-                      </svg>
-                      Public
-                    </span>
-                  </div>
-                </Link>
-              ))
-            )}
+
+              <div className="feature-card">
+                <div className="feature-icon">
+                  <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8 0a8 8 0 110 16A8 8 0 018 0zM1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0z" />
+                  </svg>
+                </div>
+                <h4>Secure</h4>
+                <p>Your code is protected with industry-standard encryption and security practices.</p>
+              </div>
+
+              
+
+
+
+              <div className="feature-card">
+                <div className="feature-icon">
+                  <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M0 2.75C0 1.784.784 1 1.75 1h12.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0114.25 15H1.75A1.75 1.75 0 010 13.25V2.75z" />
+                  </svg>
+                </div>
+                <h4>CLI Based</h4>
+                <p>Powerful command-line interface for developers who love the terminal.</p>
+              </div>
+
+              <div className="feature-card">
+                <div className="feature-icon">
+                  <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M8 0a8 8 0 110 16A8 8 0 018 0zM1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0z" />
+                  </svg>
+                </div>
+                <h4>Developer</h4>
+                <p>
+                  RepoVault is developed by <a href = "https://github.com/ShubhamV-Codes">Shubham</a>   to explore and build a
+                  Git-like version control system
+                </p>
+
+              </div>
+            </div>
+
+
           </div>
         </aside>
 
@@ -150,7 +153,7 @@ const Dashboard = () => {
           <div className="section-header">
             <div className="header-left">
               <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
-                <path d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8z"/>
+                <path d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8z" />
               </svg>
               <h2>My Repositories</h2>
             </div>
@@ -216,9 +219,8 @@ const Dashboard = () => {
                     </Link>
                     {repo.isPrivate !== undefined && (
                       <span
-                        className={`repo-visibility ${
-                          repo.isPrivate ? "private" : "public"
-                        }`}
+                        className={`repo-visibility ${repo.isPrivate ? "private" : "public"
+                          }`}
                       >
                         {repo.isPrivate ? "Private" : "Public"}
                       </span>
@@ -250,30 +252,29 @@ const Dashboard = () => {
         <aside className="dashboard-section cli-section">
           <div className="section-header">
             <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
-              <path d="M0 2.75C0 1.784.784 1 1.75 1h12.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0114.25 15H1.75A1.75 1.75 0 010 13.25V2.75zm1.75-.25a.25.25 0 00-.25.25v10.5c0 .138.112.25.25.25h12.5a.25.25 0 00.25-.25V2.75a.25.25 0 00-.25-.25H1.75zM7.25 8a.75.75 0 01-.22.53l-2.25 2.25a.75.75 0 01-1.06-1.06L5.44 8 3.72 6.28a.75.75 0 111.06-1.06l2.25 2.25c.141.14.22.331.22.53zm1.5 1.5a.75.75 0 000 1.5h3a.75.75 0 000-1.5h-3z"/>
+              <path d="M0 2.75C0 1.784.784 1 1.75 1h12.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0114.25 15H1.75A1.75 1.75 0 010 13.25V2.75zm1.75-.25a.25.25 0 00-.25.25v10.5c0 .138.112.25.25.25h12.5a.25.25 0 00.25-.25V2.75a.25.25 0 00-.25-.25H1.75zM7.25 8a.75.75 0 01-.22.53l-2.25 2.25a.75.75 0 01-1.06-1.06L5.44 8 3.72 6.28a.75.75 0 111.06-1.06l2.25 2.25c.141.14.22.331.22.53zm1.5 1.5a.75.75 0 000 1.5h3a.75.75 0 000-1.5h-3z" />
             </svg>
             <h2>CLI Guide</h2>
           </div>
-          
-          <div className="install-banner">
-  <div className="install-header">
-    <div className="install-icon">
-      <svg width="28" height="28" viewBox="0 0 16 16" fill="currentColor">
-        <path d="M8.75 2.75a.75.75 0 00-1.5 0v5.69L5.03 6.22a.75.75 0 00-1.06 1.06l3.5 3.5a.75.75 0 001.06 0l3.5-3.5a.75.75 0 00-1.06-1.06L8.75 8.44V2.75z"/>
-        <path d="M3.5 9.75a.75.75 0 00-1.5 0v1.5A2.75 2.75 0 004.75 14h6.5A2.75 2.75 0 0014 11.25v-1.5a.75.75 0 00-1.5 0v1.5c0 .69-.56 1.25-1.25 1.25h-6.5c-.69 0-1.25-.56-1.25-1.25v-1.5z"/>
-      </svg>
-    </div>
-    <h3 className="install-title">Firstly, install repovault CLI</h3>
-  </div>
-  
-  <div className="code-block-install">
-    <code>npm i repovault</code>
-    <button className="copy-btn-install" onClick={() => copyToClipboard("npm i repovault", "install")}>
-      {copiedCommand === "install" ? '✓' : '⎘'}
-    </button>
-  </div>
-</div>
 
+          <div className="install-banner">
+            <div className="install-header">
+              <div className="install-icon">
+                <svg width="28" height="28" viewBox="0 0 16 16" fill="currentColor">
+                  <path d="M8.75 2.75a.75.75 0 00-1.5 0v5.69L5.03 6.22a.75.75 0 00-1.06 1.06l3.5 3.5a.75.75 0 001.06 0l3.5-3.5a.75.75 0 00-1.06-1.06L8.75 8.44V2.75z" />
+                  <path d="M3.5 9.75a.75.75 0 00-1.5 0v1.5A2.75 2.75 0 004.75 14h6.5A2.75 2.75 0 0014 11.25v-1.5a.75.75 0 00-1.5 0v1.5c0 .69-.56 1.25-1.25 1.25h-6.5c-.69 0-1.25-.56-1.25-1.25v-1.5z" />
+                </svg>
+              </div>
+              <h3 className="install-title">Firstly, install repovault CLI</h3>
+            </div>
+
+            <div className="code-block-install">
+              <code>npm i repovault</code>
+              <button className="copy-btn-install" onClick={() => copyToClipboard("npm i repovault", "install")}>
+                {copiedCommand === "install" ? '✓' : '⎘'}
+              </button>
+            </div>
+          </div>
 
           <div className="cli-steps-compact">
             {/* Step 1 */}
@@ -283,7 +284,7 @@ const Dashboard = () => {
                 <h4>Login</h4>
                 <div className="code-block-compact">
                   <code>repovault login</code>
-                  <button 
+                  <button
                     className="copy-btn-compact"
                     onClick={() => copyToClipboard("repovault login", "login")}
                     title="Copy"
@@ -301,7 +302,7 @@ const Dashboard = () => {
                 <h4>Initialize</h4>
                 <div className="code-block-compact">
                   <code>repovault init</code>
-                  <button 
+                  <button
                     className="copy-btn-compact"
                     onClick={() => copyToClipboard("repovault init", "init")}
                     title="Copy"
@@ -319,7 +320,7 @@ const Dashboard = () => {
                 <h4>Add Remote</h4>
                 <div className="code-block-compact">
                   <code>repovault remote add origin repovault://{userName}/{exampleRepo}</code>
-                  <button 
+                  <button
                     className="copy-btn-compact"
                     onClick={() => copyToClipboard(`repovault remote add origin repovault://${userName}/${exampleRepo}`, "remote")}
                     title="Copy"
@@ -337,7 +338,7 @@ const Dashboard = () => {
                 <h4>Stage Files</h4>
                 <div className="code-block-compact">
                   <code>repovault add [files]</code>
-                  <button 
+                  <button
                     className="copy-btn-compact"
                     onClick={() => copyToClipboard("repovault add [files]", "add")}
                     title="Copy"
@@ -355,7 +356,7 @@ const Dashboard = () => {
                 <h4>Commit</h4>
                 <div className="code-block-compact">
                   <code>repovault commit -m "message"</code>
-                  <button 
+                  <button
                     className="copy-btn-compact"
                     onClick={() => copyToClipboard('repovault commit -m "Initial commit"', "commit")}
                     title="Copy"
@@ -373,7 +374,7 @@ const Dashboard = () => {
                 <h4>Push</h4>
                 <div className="code-block-compact">
                   <code>repovault push</code>
-                  <button 
+                  <button
                     className="copy-btn-compact"
                     onClick={() => copyToClipboard("repovault push", "push")}
                     title="Copy"
@@ -389,12 +390,12 @@ const Dashboard = () => {
 
           <div className="quick-commands">
             <h4>Quick Commands</h4>
-            
+
             <div className="quick-cmd">
               <span className="cmd-label">Pull</span>
               <div className="code-block-compact">
                 <code>repovault pull</code>
-                <button 
+                <button
                   className="copy-btn-compact"
                   onClick={() => copyToClipboard("repovault pull", "pull")}
                 >
@@ -407,7 +408,7 @@ const Dashboard = () => {
               <span className="cmd-label">Status</span>
               <div className="code-block-compact">
                 <code>repovault status</code>
-                <button 
+                <button
                   className="copy-btn-compact"
                   onClick={() => copyToClipboard("repovault status", "status")}
                 >
@@ -444,6 +445,8 @@ const Dashboard = () => {
           </div>
         </aside>
       </section>
+
+  <Footer/>
     </>
   );
 };
