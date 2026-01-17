@@ -275,7 +275,7 @@ const RepositoryDetails = () => {
       <div className="repo-top-bar">
         <div className="repo-top-left">
           <Link to="/" className="back-icon" title="Back to dashboard">
-            <img src="../src/assets/RepoVault.svg" alt="RepoVault Logo" style={{ height: "2.4rem" }} />
+            <img src="../../src/assets/RepoVault.svg" alt="RepoVault Logo" style={{ height: "2.4rem" }} />
           </Link>
           <h1 className="repo-title">{repository.name}</h1>
           <span className={`repo-badge ${repository.visibility ? "public" : "private"}`}>
