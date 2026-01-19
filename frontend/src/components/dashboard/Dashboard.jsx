@@ -61,12 +61,7 @@ const Dashboard = () => {
     return (
       <div className="dashboard-loading">
         <div className="loading-spinner"></div>
-
-        <p>
-         &nbsp; &nbsp; &nbsp; &nbsp; Waking up server…
-          <br />
-          This may take a few seconds
-        </p>
+        <p>Loading repositories...</p>
       </div>
     );
   }
@@ -97,7 +92,7 @@ const Dashboard = () => {
             </div>
 
             <div className="features-grid">
-
+              
 
               <div className="feature-card">
                 <div className="feature-icon">
@@ -120,7 +115,7 @@ const Dashboard = () => {
                 <p>Your code is protected with industry-standard encryption and security practices.</p>
               </div>
 
-
+              
 
 
 
@@ -142,7 +137,7 @@ const Dashboard = () => {
                 </div>
                 <h4>Developer</h4>
                 <p>
-                  RepoVault is developed by <a href="https://github.com/ShubhamV-Codes">Shubham</a>   to explore and build a
+                  RepoVault is developed by <a href = "https://github.com/ShubhamV-Codes">Shubham</a>   to explore and build a
                   Git-like version control system
                 </p>
 
@@ -451,7 +446,7 @@ const Dashboard = () => {
         </aside>
       </section>
 
-      <Footer />
+  <Footer/>
     </>
   );
 };
