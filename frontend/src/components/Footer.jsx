@@ -14,7 +14,7 @@ const Footer = () => {
         
         <div className="footer-links">
           <a href="https://www.npmjs.com/package/repovault" target="_blank" rel="noopener noreferrer">CLI</a>
-          <a href="https://github.com/ShubhamV-Codes/repovault" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://github.com/ShubhamV-Codes/repovault" target="_blank" rel="noopener noreferrer">Source-Code</a>
           <a href="https://www.linkedin.com/in/shubhamvishwakarma-swe">Contact</a>
           <a href="https://vistara-lime.vercel.app" target="_blank" rel="noopener noreferrer">Vistara</a>
         </div>
