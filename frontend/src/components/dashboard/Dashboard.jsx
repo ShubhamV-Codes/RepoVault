@@ -270,7 +270,7 @@ const Dashboard = () => {
 
             <div className="code-block-install">
               <code>npm install -g repovault</code>
-              <button className="copy-btn-install" onClick={() => copyToClipboard("npm i repovault", "install")}>
+              <button className="copy-btn-install" onClick={() => copyToClipboard("npm install -g repovault", "install")}>
                 {copiedCommand === "install" ? '✓' : '⎘'}
               </button>
             </div>
