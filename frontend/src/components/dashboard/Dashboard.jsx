@@ -92,7 +92,7 @@ const Dashboard = () => {
             </div>
 
             <div className="features-grid">
-              
+
 
               <div className="feature-card">
                 <div className="feature-icon">
@@ -115,7 +115,7 @@ const Dashboard = () => {
                 <p>Your code is protected with industry-standard encryption and security practices.</p>
               </div>
 
-              
+
 
 
 
@@ -137,7 +137,7 @@ const Dashboard = () => {
                 </div>
                 <h4>Developer</h4>
                 <p>
-                  RepoVault is developed by <a href = "https://github.com/ShubhamV-Codes">Shubham</a>   to explore and build a
+                  RepoVault is developed by <a href="https://github.com/ShubhamV-Codes">Shubham</a>   to explore and build a
                   Git-like version control system
                 </p>
 
@@ -269,7 +269,7 @@ const Dashboard = () => {
             </div>
 
             <div className="code-block-install">
-              <code>npm i repovault</code>
+              <code>npm install -g repovault</code>
               <button className="copy-btn-install" onClick={() => copyToClipboard("npm i repovault", "install")}>
                 {copiedCommand === "install" ? '✓' : '⎘'}
               </button>
@@ -301,10 +301,10 @@ const Dashboard = () => {
               <div className="step-info">
                 <h4>Initialize</h4>
                 <div className="code-block-compact">
-                  <code>repovault init</code>
+                  <code>repovault init &lt;repoID &gt;</code>
                   <button
                     className="copy-btn-compact"
-                    onClick={() => copyToClipboard("repovault init", "init")}
+                    onClick={() => copyToClipboard(`repovault init ${repoID}`, "init")}
                     title="Copy"
                   >
                     {copiedCommand === "init" ? "✓" : "⎘"}
@@ -319,10 +319,10 @@ const Dashboard = () => {
               <div className="step-info">
                 <h4>Add Remote</h4>
                 <div className="code-block-compact">
-                  <code>repovault remote add origin repovault://{userName}/{exampleRepo}</code>
+                  <code>repovault remote add origin https://repovault.onrender.com &lt;repoID &gt;</code>
                   <button
                     className="copy-btn-compact"
-                    onClick={() => copyToClipboard(`repovault remote add origin repovault://${userName}/${exampleRepo}`, "remote")}
+                    onClick={() => copyToClipboard(`repovault remote add origin https://repovault.onrender.com ${repoID}`, "remote")}
                     title="Copy"
                   >
                     {copiedCommand === "remote" ? "✓" : "⎘"}
@@ -394,6 +394,20 @@ const Dashboard = () => {
             <div className="quick-cmd">
               <span className="cmd-label">Pull</span>
               <div className="code-block-compact">
+                <code>repovault --version</code>
+                <button
+                  className="copy-btn-compact"
+                  onClick={() => copyToClipboard("repovault --version", "version")}
+                >
+                  {copiedCommand === "version" ? "✓" : "⎘"}
+                </button>
+              </div>
+            </div>
+
+
+            <div className="quick-cmd">
+              <span className="cmd-label">Pull</span>
+              <div className="code-block-compact">
                 <code>repovault pull</code>
                 <button
                   className="copy-btn-compact"
@@ -446,7 +460,7 @@ const Dashboard = () => {
         </aside>
       </section>
 
-  <Footer/>
+      <Footer />
     </>
   );
 };
