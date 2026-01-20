@@ -227,6 +227,12 @@ const RepositoryDetails = () => {
     alert('Code copied to clipboard!');
   };
 
+  // Copy command to clipboard
+  const copyCommand = (command) => {
+    navigator.clipboard.writeText(command);
+    alert('Command copied to clipboard!');
+  };
+
   // Filter files based on search query
 
   const filteredFiles = files.filter(file =>
@@ -401,15 +407,164 @@ const RepositoryDetails = () => {
       <div className="files-container">
         {filteredFiles.length === 0 ? (
           <div className="no-files-state">
-            <svg width="64" height="64" viewBox="0 0 16 16" fill="currentColor">
-              <path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0113.25 16h-9.5A1.75 1.75 0 012 14.25V1.75z" />
-            </svg>
-            <h3>{searchQuery ? 'No files found' : 'No files yet'}</h3>
-            <p>{searchQuery ? 'Try a different search term' : 'Add files to your repository to get started'}</p>
-            {!searchQuery && (
-              <button className="add-file-btn" onClick={() => setShowUploadModal(true)}>
-                Add File
-              </button>
+            {searchQuery ? (
+              <>
+                <svg width="64" height="64" viewBox="0 0 16 16" fill="currentColor">
+                  <path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0113.25 16h-9.5A1.75 1.75 0 012 14.25V1.75z" />
+                </svg>
+                <h3>No files found</h3>
+                <p>Try a different search term</p>
+              </>
+            ) : (
+              <div className="setup-guide">
+                <h3 style={{ marginBottom: '24px', fontSize: '20px', fontWeight: '600' }}>Get Started with RepoVault CLI</h3>
+                
+                <div className="setup-step">
+                  <div className="step-header">
+                    <span className="step-number">1</span>
+                    <span className="step-title">Install RepoVault CLI</span>
+                  </div>
+                  <div className="command-container">
+                    <code>npm install -g repovault</code>
+                    <button 
+                      className="copy-btn" 
+                      onClick={() => copyCommand('npm install -g repovault')}
+                      title="Copy command"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" />
+                        <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div className="setup-step">
+                  <div className="step-header">
+                    <span className="step-number">2</span>
+                    <span className="step-title">Login</span>
+                  </div>
+                  <div className="command-container">
+                    <code>repovault login</code>
+                    <button 
+                      className="copy-btn" 
+                      onClick={() => copyCommand('repovault login')}
+                      title="Copy command"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" />
+                        <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div className="setup-step">
+                  <div className="step-header">
+                    <span className="step-number">3</span>
+                    <span className="step-title">Initialize</span>
+                  </div>
+                  <div className="command-container">
+                    <code>repovault init {repoId}</code>
+                    <button 
+                      className="copy-btn" 
+                      onClick={() => copyCommand(`repovault init ${repoId}`)}
+                      title="Copy command"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" />
+                        <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div className="setup-step">
+                  <div className="step-header">
+                    <span className="step-number">4</span>
+                    <span className="step-title">Add Remote</span>
+                  </div>
+                  <div className="command-container">
+                    <code>repovault remote add origin https://repovault.onrender.com {repoId}</code>
+                    <button 
+                      className="copy-btn" 
+                      onClick={() => copyCommand(`repovault remote add origin https://repovault.onrender.com ${repoId}`)}
+                      title="Copy command"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" />
+                        <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div className="setup-step">
+                  <div className="step-header">
+                    <span className="step-number">5</span>
+                    <span className="step-title">Stage Files</span>
+                  </div>
+                  <div className="command-container">
+                    <code>repovault add [files]</code>
+                    <button 
+                      className="copy-btn" 
+                      onClick={() => copyCommand('repovault add [files]')}
+                      title="Copy command"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" />
+                        <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div className="setup-step">
+                  <div className="step-header">
+                    <span className="step-number">6</span>
+                    <span className="step-title">Commit</span>
+                  </div>
+                  <div className="command-container">
+                    <code>repovault commit -m "message"</code>
+                    <button 
+                      className="copy-btn" 
+                      onClick={() => copyCommand('repovault commit -m "message"')}
+                      title="Copy command"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" />
+                        <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div className="setup-step">
+                  <div className="step-header">
+                    <span className="step-number">7</span>
+                    <span className="step-title">Push</span>
+                  </div>
+                  <div className="command-container">
+                    <code>repovault push</code>
+                    <button 
+                      className="copy-btn" 
+                      onClick={() => copyCommand('repovault push')}
+                      title="Copy command"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" />
+                        <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div style={{ marginTop: '24px', padding: '16px', background: '#f6f8fa', borderRadius: '6px', border: '1px solid #d0d7de' }}>
+                  <p style={{ margin: 0, fontSize: '14px', color: '#57606a' }}>
+                    Or you can <button className="add-file-btn" onClick={() => setShowUploadModal(true)} style={{ display: 'inline', padding: '4px 8px', fontSize: '14px' }}>upload files directly</button> from the web interface.
+                  </p>
+                </div>
+              </div>
             )}
           </div>
         ) : (
