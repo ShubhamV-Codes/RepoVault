@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./profile.css";
 import Navbar from "../Navbar";
 import { useAuth } from "../../authContext";
+import Footer from "../Footer";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -112,6 +113,23 @@ const Profile = () => {
     navigate("/auth");
   }, [navigate, setCurrentUser]);
 
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
+  
+    const handleLogoutClick = () => {
+      setShowLogoutModal(true);
+    };
+  
+    const confirmLogout = () => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
+      setShowLogoutModal(false);
+      navigate("/auth");
+    };
+  
+    const cancelLogout = () => {
+      setShowLogoutModal(false);
+    };
+    
   // Filter and sort repositories
   const filteredAndSortedRepos = useMemo(() => {
     let filtered = repositories.filter(repo => 
@@ -156,7 +174,8 @@ const Profile = () => {
         <Navbar />
         <div className="profile-loading">
           <div className="loading-spinner"></div>
-          <p>Loading profile...</p>
+          <p style={{textAlign:"center"}}>Loading Your Profile :<br /> {userDetails?.username} </p>
+           
         </div>
       </>
     );
@@ -214,6 +233,7 @@ const Profile = () => {
               {userDetails.createdAt && (
                 <p className="profile-joined">
                   Joined {new Date(userDetails.createdAt).toLocaleDateString('en-US', { 
+                    day: 'numeric',
                     month: 'long', 
                     year: 'numeric' 
                   })}
@@ -237,7 +257,7 @@ const Profile = () => {
               <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                 <path d="M2 2.75C2 1.784 2.784 1 3.75 1h2.5a.75.75 0 010 1.5h-2.5a.25.25 0 00-.25.25v10.5c0 .138.112.25.25.25h2.5a.75.75 0 010 1.5h-2.5A1.75 1.75 0 012 13.25V2.75zm10.44 4.5l-1.97-1.97a.75.75 0 10-1.06 1.06l.72.72H6a.75.75 0 000 1.5h4.19l-.72.72a.75.75 0 101.06 1.06l1.97-1.97a.75.75 0 000-1.06z"></path>
               </svg>
-              Logout
+               Direct Logout
             </button>
           </aside>
 
@@ -388,6 +408,7 @@ const Profile = () => {
           </main>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

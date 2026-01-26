@@ -274,6 +274,17 @@ const Dashboard = () => {
                 {copiedCommand === "install" ? '✓' : '⎘'}
               </button>
             </div>
+              <p className="install-subtext">Why Globally?</p>
+              <p>Installing globally allows you to use the CLI commands from anywhere in your terminal without needing to prefix them with `npx`.</p>
+               
+               <div className="code-block-install">
+              <code>npm i repovault</code>
+              <button className="copy-btn-install" onClick={() => copyToClipboard("npm i repovault", "install")}>
+                {copiedCommand === "install" ? '✓' : '⎘'}
+              </button>
+
+            </div>
+              <p>If you prefer not to install globally, make sure you created a .repovaultignore file in your project so that large files are ignored, saving storage on AWS.</p>
           </div>
 
           <div className="cli-steps-compact">
@@ -281,7 +292,7 @@ const Dashboard = () => {
             <div className="cli-step-compact">
               <div className="step-indicator">1</div>
               <div className="step-info">
-                <h4>Login</h4>
+                <h4>Login With Your Credentials :</h4>
                 <div className="code-block-compact">
                   <code>repovault login</code>
                   <button
@@ -299,7 +310,7 @@ const Dashboard = () => {
             <div className="cli-step-compact">
               <div className="step-indicator">2</div>
               <div className="step-info">
-                <h4>Initialize</h4>
+                <h4>Initialize Repository in Repovault :</h4>
                 <div className="code-block-compact">
                   <code>repovault init &lt;repoID &gt;</code>
                   <button
@@ -317,7 +328,7 @@ const Dashboard = () => {
             <div className="cli-step-compact">
               <div className="step-indicator">3</div>
               <div className="step-info">
-                <h4>Add Remote</h4>
+                <h4>Add Remote Path from Terminal :</h4>
                 <div className="code-block-compact">
                   <code>repovault remote add origin https://repovault.onrender.com &lt;repoID &gt;</code>
                   <button
@@ -335,7 +346,7 @@ const Dashboard = () => {
             <div className="cli-step-compact">
               <div className="step-indicator">4</div>
               <div className="step-info">
-                <h4>Stage Files</h4>
+                <h4>Stage Files :</h4>
                 <div className="code-block-compact">
                   <code>repovault add [files]</code>
                   <button
@@ -353,7 +364,7 @@ const Dashboard = () => {
             <div className="cli-step-compact">
               <div className="step-indicator">5</div>
               <div className="step-info">
-                <h4>Commit</h4>
+                <h4>Commit Changes :</h4>
                 <div className="code-block-compact">
                   <code>repovault commit -m "message"</code>
                   <button
@@ -371,7 +382,7 @@ const Dashboard = () => {
             <div className="cli-step-compact">
               <div className="step-indicator">6</div>
               <div className="step-info">
-                <h4>Push</h4>
+                <h4>Push to Cloud :</h4>
                 <div className="code-block-compact">
                   <code>repovault push</code>
                   <button

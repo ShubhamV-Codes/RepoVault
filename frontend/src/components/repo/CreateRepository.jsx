@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./createRepo.css";
+import Navbar from "../Navbar";
+import Footer from "../Footer";
 
 const CreateRepository = () => {
   const [formData, setFormData] = useState({
@@ -86,6 +88,10 @@ const CreateRepository = () => {
   };
 
   return (
+    <>
+
+    <Navbar />
+    
     <div className="create-repo-wrapper">
       <div className="create-repo-container">
         <div className="create-repo-header">
@@ -110,7 +116,7 @@ const CreateRepository = () => {
               name="name"
               type="text"
               className="form-input"
-              placeholder="my-awesome-project"
+              placeholder="my-awesome-repo"
               value={formData.name}
               onChange={handleChange}
               disabled={loading}
@@ -158,7 +164,7 @@ const CreateRepository = () => {
                     <strong>Public</strong>
                   </div>
                   <p className="visibility-description">
-                    Anyone on the internet can see this repository.
+                    Anyone on the internet can see this repository with ID ref.
                   </p>
                 </div>
               </label>
@@ -179,7 +185,7 @@ const CreateRepository = () => {
                     <strong>Private</strong>
                   </div>
                   <p className="visibility-description">
-                    You choose who can see and commit to this repository.
+                    Private repositories are only accessible to you 
                   </p>
                 </div>
               </label>
@@ -207,6 +213,9 @@ const CreateRepository = () => {
         </form>
       </div>
     </div>
+
+    <Footer />
+    </>
   );
 };
 
